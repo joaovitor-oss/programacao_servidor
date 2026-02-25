@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Fatura id="123456789">
+   
+     <cabecalho>
+        <data>2024-01-01</data>
+        <numero>123456789</numero>
+     </cabecalho>
+        <cliente>
+            <nome>João Silva</nome>
+            <morada>Rua das Flores, 123</morada>
+            <telefone>(351) 123-4567</telefone>
+        </cliente>
+        <produtos>
+            <produto>
+                <codigo>001</codigo>
+                <designacao>Leite</designacao>
+                <quantidade>2</quantidade>
+                <preco_unitario>1.70</preco_unitario>
+            </produto>
+        </produtos>
+            <produtos>
+            <produto>
+                <codigo>002</codigo>
+                <designacao>Pão</designacao>
+                <quantidade>15</quantidade>
+                <preco_unitario>0.50</preco_unitario>
+            </produto>
+        </produtos>
+        
+</Fatura>
