@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Armazenamento no Browser</title>
+</head>
+<body>
+
+    <h1>Teste de Armazenamento</h1>
+
+    <input type="text" id="nome" placeholder="Nome para Storage">
+    <button onclick="guardarLocal()">Guardar LocalStorage</button>
+    <button onclick="guardarSession()">Guardar SessionStorage</button>
+    <button type="button" onclick="lerDados()">Ler Dados (Console)</button>
+
+    <hr>
+
+    <div>
+        <input type="text" id="nomeAluno" placeholder="Nome do aluno">
+        <input type="number" id="idade" placeholder="Idade" min="0">
+        <button type="button" onclick="guardarAluno()">Guardar Aluno</button>
+        <button type="button" onclick="atualizartabela()">Atualizar Tabela</button>
+    </div>
+
+    <br>
+
+    <table id="tabelaAlunos" border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #eee;">
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Idade</th>
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
