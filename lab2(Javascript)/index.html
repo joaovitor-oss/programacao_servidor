@@ -19,12 +19,12 @@
         <input type="text" id="nomeAluno" placeholder="Nome do aluno">
         <input type="number" id="idade" placeholder="Idade" min="0">
         <button type="button" onclick="guardarAluno()">Guardar Aluno</button>
-        <button type="button" onclick="atualizartabela()">Atualizar Tabela</button>
+        <button type="button" onclick="deletarAluno(), atualizartabela()">Deletar Alunos</button>
     </div>
 
     <br>
 
-    <table id="tabelaAlunos" border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+    <table id="tabelaAlunos" border="1" style="width: 50%; text-align: left; border-collapse: collapse;">
         <thead>
             <tr style="background-color: #eee;">
                 <th>ID</th>
@@ -32,8 +32,7 @@
                 <th>Idade</th>
             </tr>
         </thead>
-        <tbody>
-            </tbody>
+        <tbody></tbody>
     </table>
 
     <script src="script.js"></script>

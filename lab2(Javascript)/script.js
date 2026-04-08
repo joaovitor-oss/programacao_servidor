@@ -113,7 +113,7 @@ function atualizartabela() {
     let requestCursor = store.openCursor();
 
     requestCursor.onsuccess = function(event) {
-        let cursor = event.target.result;
+       const cursor = event.target.result;
         if (cursor) {
             let row = document.createElement("tr");
             
@@ -154,4 +154,12 @@ function lerDados() {
     const session = sessionStorage.getItem("nomeSession") || "Vazio";
     console.log("LocalStorage:", local);
     console.log("SessionStorage:", session);
+}
+
+function deletarAluno() {
+    let transaction = db.transaction(["alunos"], "readwrite");
+
+    const store = transaction.objectStore("alunos");
+
+    store.clear();
 }
