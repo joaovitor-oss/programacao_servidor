@@ -32,7 +32,7 @@
                   },
                   "pratica": {
                     "NM": "2",
-                    "nome": "Filipe"
+                    "nome": "João"
                   }
                 }
               }
@@ -84,7 +84,7 @@
                 "docentes": {
                   "teorica": {
                     "NM": "1",
-                    "nome": "Filipe"
+                    "nome": "alberto"
                   },
                   "pratica": {
                     "NM": "4",
@@ -101,7 +101,7 @@
                 "docentes": {
                   "teorica": {
                     "NM": "3",
-                    "nome": "Filipe"
+                    "nome": "alberto"
                   },
                   "pratica": null
                 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Consumos Energéticos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+    <h1>Painel de Consumos</h1>
+
+    <!-- Visualização de Dados -->
+    <section>
+        <h2>Visualizar Cliente</h2>
+        <input type="text" id="searchId" placeholder="ID do Cliente (ex: 12345)">
+        <button onclick="buscarCliente()">Procurar</button>
+        <button onclick="listarTodos()">Listar Todos</button>
+        <!-- Substitui o <pre id="output"> por isto: -->
+        <div id="dados-cliente" class="cliente-card" style="display: none;">
+            <h2>Dados do Cliente</h2>
+            <div id="info-geral"></div>
+            
+            <h3>Histórico de Consumo</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mês/Ano</th>
+                        <th>Consumo (kWh)</th>
+                        <th>Custo </th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-consumo"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- Adicionar Consumo -->
+    <section>
+        <h2>Adicionar Novo Consumo</h2>
+        <input type="text" id="postClienteId" placeholder="ID do Cliente">
+        <input type="text" id="mes" placeholder="Mês (ex: Março)">
+        <input type="number" id="ano" placeholder="Ano (ex: 2026)">
+        <input type="number" id="custo" placeholder="Custo Total">
+        <input type="number" id="kwh" placeholder="kWh Consumido">
+        <button onclick="adicionarConsumo()">Adicionar Consumo</button>
+    </section>
+
+    <hr>
+
+    <!-- Atualizar Endereço -->
+    <section>
+        <h2>Atualizar Endereço</h2>
+        <input type="text" id="putId" placeholder="ID do Cliente">
+        <input type="text" id="rua" placeholder="Rua">
+        <input type="text" id="cidade" placeholder="Cidade">
+        <button onclick="atualizarEndereco()">Atualizar Morada</button>
+    </section>
+
+    <hr>
+
+    <!-- Eliminar Consumo -->
+    <section>
+        <h2>Eliminar Consumo</h2>
+        <input type="text" id="delId" placeholder="ID do Cliente">
+        <input type="text" id="delMes" placeholder="Mês a eliminar">
+        <button onclick="eliminarConsumo()" style="background-color: #d32f2f;">Eliminar</button>
+    </section>
+
+    <script src="index.js"></script>
+</body>
+</html>

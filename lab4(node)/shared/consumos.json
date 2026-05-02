@@ -1,0 +1,33 @@
+[
+  {
+    "clienteId": "12345",
+    "nome": "João Silva",
+    "endereco": {
+      "rua": "Rua Castro Alves",
+      "numero": "53",
+      "cidade": "Porto",
+      "codigoPostal": "1357-579"
+    },
+    "consumo": [
+      {
+        "mes": "Janeiro",
+        "ano": 2023,
+        "kWhConsumido": 250,
+        "custoTotal": 35.5,
+        "dataLeitura": "2023-01-31"
+      },
+      {
+        "mes": "Fevereiro",
+        "ano": 2026,
+        "kWhConsumido": 1500,
+        "custoTotal": 210,
+        "dataLeitura": "2026-04-29"
+      }
+    ],
+    "informacoesAdicionais": {
+      "tipoTarifa": "Residencial",
+      "fornecedorEnergia": "Empresa XYZ",
+      "contratoAtivo": true
+    }
+  }
+]

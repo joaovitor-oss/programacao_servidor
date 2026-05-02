@@ -18,7 +18,7 @@
 			 <ects>4</ects>
 			 <docentes>
 			     <teorica NM="1">Nuno</teorica>
-				 <pratica NM="2">Filipe</pratica>
+				 <pratica NM="2">João</pratica>
 		     </docentes>
 		   </disciplina>
 		</anoCurricular>
@@ -49,7 +49,7 @@
 		     <nome>Redes</nome>
 			 <ects>3</ects>
 			 <docentes>
-			     <teorica NM="1">Filipe</teorica>
+			     <teorica NM="1">alberto</teorica>
 				 <pratica NM="4">Pedro</pratica>
 		     </docentes>
 		   </disciplina>
@@ -59,7 +59,7 @@
 		     <nome>Matemática</nome>
 			 <ects>8</ects>
 			 <docentes>
-			     <teorica NM="3">Filipe</teorica>
+			     <teorica NM="3">alberto</teorica>
 				 <pratica/>
 		     </docentes>
 		   </disciplina>
