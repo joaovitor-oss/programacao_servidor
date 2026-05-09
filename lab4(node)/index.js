@@ -26,7 +26,6 @@ const exibirResultado = (data) => {
     listaClientes.forEach(cliente => {
         // Criar um cabeçalho para cada cliente na lista
         const header = document.createElement('div');
-        header.style.borderBottom = "1px solid #444";
         header.style.marginBottom = "10px";
         header.innerHTML = `
             <p><strong>ID:</strong> ${cliente.clienteId} | <strong>Nome:</strong> ${cliente.nome}</p>
