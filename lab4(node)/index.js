@@ -81,6 +81,7 @@ async function adicionarConsumo() {
     const corpo = {
         mes: document.getElementById('mes').value,
         ano: parseInt(document.getElementById('ano').value),
+        custoTotal: parseFloat(document.getElementById('custo').value),
         kWhConsumido: parseFloat(document.getElementById('kwh').value)
     };
 

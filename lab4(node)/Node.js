@@ -70,7 +70,7 @@ app.post('/consumos/:clienteId', (req, res) => {
         custoTotal: req.body.custoTotal,
         dataLeitura: req.body.dataLeitura
     };
-
+    console.log('Novo consumo recebido:', novoConsumo);
     // 3. Adicionar ao array "consumo" do cliente encontrado
     dados[index].consumo.push(novoConsumo);
 

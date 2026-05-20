@@ -22,6 +22,22 @@
         "kWhConsumido": 1500,
         "custoTotal": 210,
         "dataLeitura": "2026-04-29"
+      },
+      {
+        "mes": "Abril",
+        "ano": 2026,
+        "kWhConsumido": 855
+      },
+      {
+        "mes": "maio",
+        "ano": 2027,
+        "kWhConsumido": 404
+      },
+      {
+        "mes": "julho",
+        "ano": 2028,
+        "kWhConsumido": 111,
+        "custoTotal": 255
       }
     ],
     "informacoesAdicionais": {

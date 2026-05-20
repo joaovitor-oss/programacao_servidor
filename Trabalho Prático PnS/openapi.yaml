@@ -1,0 +1,666 @@
+openapi: 3.0.3
+
+info:
+  title: API de Gestão de Cultivo de Ervas Aromáticas
+  version: 1.0.0
+  description: API para gestão de utilizadores, ervas aromáticas, planos de cultivo, lotes, tarefas, medições ambientais, alertas e logs de auditoria.
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+
+tags:
+  - name: Utilizadores
+  - name: Ervas Aromáticas
+  - name: Planos de Cultivo
+  - name: Lotes de Cultivo
+  - name: Tarefas
+  - name: Medições Ambientais
+  - name: Alertas
+  - name: Logs de Auditoria
+
+paths:
+  /utilizadores:
+    get:
+      tags: [Utilizadores]
+      summary: Lista todos os utilizadores registados no sistema
+      responses:
+        "200":
+          description: Lista de utilizadores obtida com sucesso
+
+    post:
+      tags: [Utilizadores]
+      summary: Cria um novo utilizador no sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UtilizadorInput"
+      responses:
+        "201":
+          description: Utilizador criado com sucesso
+
+  /utilizadores/{id}:
+    get:
+      tags: [Utilizadores]
+      summary: Obtém os dados de um utilizador específico
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Utilizador encontrado
+        "404":
+          description: Utilizador não encontrado
+
+    put:
+      tags: [Utilizadores]
+      summary: Atualiza os dados de um utilizador existente
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UtilizadorInput"
+      responses:
+        "200":
+          description: Utilizador atualizado com sucesso
+
+    delete:
+      tags: [Utilizadores]
+      summary: Remove um utilizador do sistema
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Utilizador removido com sucesso
+
+  /ervas-aromaticas:
+    get:
+      tags: [Ervas Aromáticas]
+      summary: Lista todas as ervas aromáticas disponíveis
+      responses:
+        "200":
+          description: Lista de ervas aromáticas obtida com sucesso
+
+    post:
+      tags: [Ervas Aromáticas]
+      summary: Cria uma nova erva aromática no sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErvaAromaticaInput"
+      responses:
+        "201":
+          description: Erva aromática criada com sucesso
+
+  /ervas-aromaticas/{id}:
+    get:
+      tags: [Ervas Aromáticas]
+      summary: Obtém os dados de uma erva aromática específica
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Erva aromática encontrada
+        "404":
+          description: Erva aromática não encontrada
+
+    put:
+      tags: [Ervas Aromáticas]
+      summary: Atualiza os dados de uma erva aromática existente
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErvaAromaticaInput"
+      responses:
+        "200":
+          description: Erva aromática atualizada com sucesso
+
+    delete:
+      tags: [Ervas Aromáticas]
+      summary: Remove uma erva aromática do sistema
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Erva aromática removida com sucesso
+
+  /planos-cultivo:
+    get:
+      tags: [Planos de Cultivo]
+      summary: Lista todos os planos de cultivo existentes
+      responses:
+        "200":
+          description: Lista de planos de cultivo obtida com sucesso
+
+    post:
+      tags: [Planos de Cultivo]
+      summary: Cria um novo plano de cultivo para uma erva aromática
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlanoCultivoInput"
+      responses:
+        "201":
+          description: Plano de cultivo criado com sucesso
+
+  /planos-cultivo/{id}:
+    get:
+      tags: [Planos de Cultivo]
+      summary: Obtém os dados de um plano de cultivo específico
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Plano de cultivo encontrado
+        "404":
+          description: Plano de cultivo não encontrado
+
+    put:
+      tags: [Planos de Cultivo]
+      summary: Atualiza os dados de um plano de cultivo existente
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlanoCultivoInput"
+      responses:
+        "200":
+          description: Plano de cultivo atualizado com sucesso
+
+    delete:
+      tags: [Planos de Cultivo]
+      summary: Remove um plano de cultivo do sistema
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Plano de cultivo removido com sucesso
+
+  /lotes-cultivo:
+    get:
+      tags: [Lotes de Cultivo]
+      summary: Lista todos os lotes de cultivo registados
+      responses:
+        "200":
+          description: Lista de lotes obtida com sucesso
+
+    post:
+      tags: [Lotes de Cultivo]
+      summary: Cria um novo lote de cultivo associado a um plano de cultivo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoteCultivoInput"
+      responses:
+        "201":
+          description: Lote de cultivo criado com sucesso
+
+  /lotes-cultivo/{id}:
+    get:
+      tags: [Lotes de Cultivo]
+      summary: Obtém os dados de um lote de cultivo específico
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Lote de cultivo encontrado
+
+    put:
+      tags: [Lotes de Cultivo]
+      summary: Atualiza os dados de um lote de cultivo existente
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoteCultivoInput"
+      responses:
+        "200":
+          description: Lote de cultivo atualizado com sucesso
+
+    delete:
+      tags: [Lotes de Cultivo]
+      summary: Remove um lote de cultivo do sistema
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Lote de cultivo removido com sucesso
+
+  /tarefas:
+    get:
+      tags: [Tarefas]
+      summary: Lista todas as tarefas associadas aos lotes de cultivo
+      responses:
+        "200":
+          description: Lista de tarefas obtida com sucesso
+
+    post:
+      tags: [Tarefas]
+      summary: Cria uma nova tarefa operacional para um lote de cultivo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TarefaInput"
+      responses:
+        "201":
+          description: Tarefa criada com sucesso
+
+  /tarefas/{id}:
+    get:
+      tags: [Tarefas]
+      summary: Obtém os dados de uma tarefa específica
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Tarefa encontrada
+
+    put:
+      tags: [Tarefas]
+      summary: Atualiza os dados ou estado de uma tarefa existente
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TarefaInput"
+      responses:
+        "200":
+          description: Tarefa atualizada com sucesso
+
+    delete:
+      tags: [Tarefas]
+      summary: Remove uma tarefa do sistema
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Tarefa removida com sucesso
+
+  /medicoes-ambientais:
+    get:
+      tags: [Medições Ambientais]
+      summary: Lista todas as medições ambientais registadas
+      responses:
+        "200":
+          description: Lista de medições ambientais obtida com sucesso
+
+    post:
+      tags: [Medições Ambientais]
+      summary: Regista uma nova medição ambiental de um lote de cultivo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MedicaoAmbientalInput"
+      responses:
+        "201":
+          description: Medição ambiental registada com sucesso
+
+  /medicoes-ambientais/{id}:
+    get:
+      tags: [Medições Ambientais]
+      summary: Obtém os dados de uma medição ambiental específica
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Medição ambiental encontrada
+
+    delete:
+      tags: [Medições Ambientais]
+      summary: Remove uma edição ambiental do sistema
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Medição ambiental removida com sucesso
+
+  /alertas:
+    get:
+      tags: [Alertas]
+      summary: Lista todos os alertas gerados pelo sistema
+      responses:
+        "200":
+          description: Lista de alertas obtida com sucesso
+
+    post:
+      tags: [Alertas]
+      summary: Cria um novo alerta associado a um lote ou medição ambiental
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlertaInput"
+      responses:
+        "201":
+          description: Alerta criado com sucesso
+
+  /alertas/{id}:
+    get:
+      tags: [Alertas]
+      summary: Obtém os dados de um alerta específico
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Alerta encontrado
+
+    put:
+      tags: [Alertas]
+      summary: Atualiza o estado de um alerta existente
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlertaInput"
+      responses:
+        "200":
+          description: Alerta updated com sucesso
+
+    delete:
+      tags: [Alertas]
+      summary: Remove um alerta do sistema
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Alerta removido com sucesso
+
+  /logs-auditoria:
+    get:
+      tags: [Logs de Auditoria]
+      summary: Lista os registos de auditoria das ações realizadas no sistema
+      responses:
+        "200":
+          description: Lista de logs de auditoria obtida com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LogAuditoria"
+
+  /logs-auditoria/{id}:
+    get:
+      tags: [Logs de Auditoria]
+      summary: Obtém os detalhes de um registo de auditoria específico
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Log de auditoria encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LogAuditoria"
+
+components:
+  parameters:
+    IdParam:
+      name: id
+      in: path
+      required: true
+      description: Identificador único do recurso no MongoDB
+      schema:
+        type: string
+        example: "665f1a7b2f4c9a0012345678"
+
+  schemas:
+    UtilizadorInput:
+      type: object
+      required: [nome, email, tipo]
+      properties:
+        nome:
+          type: string
+          example: João Silva
+        email:
+          type: string
+          format: email
+          example: joao@email.com
+        tipo:
+          type: string
+          enum: [tecnico, responsavel, administrador]
+          example: tecnico
+
+    ErvaAromaticaInput:
+      type: object
+      required: [nome, especie]
+      properties:
+        nome:
+          type: string
+          example: Manjericão
+        especie:
+          type: string
+          example: Ocimum basilicum
+        descricao:
+          type: string
+          example: Erva aromática usada na culinária
+
+    PlanoCultivoInput:
+      type: object
+      required: [ervaAromaticaId, nome, tipo, duracaoDias]
+      properties:
+        ervaAromaticaId:
+          type: string
+          example: "665f1a7b2f4c9a0012345678"
+        nome:
+          type: string
+          example: Plano de cultivo de manjericão
+        tipo:
+          type: string
+          enum: [regular, emergencia, pontual]
+          example: regular
+        duracaoDias:
+          type: integer
+          example: 60
+        temperaturaMin:
+          type: number
+          example: 18
+        temperaturaMax:
+          type: number
+          example: 28
+        humidadeMin:
+          type: number
+          example: 40
+        humidadeMax:
+          type: number
+          example: 70
+        luminosidadeMin:
+          type: number
+          example: 500
+        luminosidadeMax:
+          type: number
+          example: 1200
+        planoRega:
+          type: string
+          example: Rega diária ao início da manhã
+        planoFertilizacao:
+          type: string
+          example: Fertilização orgânica semanal
+        intervaloMinimoIntervencoes:
+          type: integer
+          example: 3
+        tipoIntervencao:
+          type: string
+          example: Tratamento contra pragas
+        dosagem:
+          type: string
+          example: 10ml por litro de água
+        autorizacaoResponsavel:
+          type: boolean
+          example: true
+        instrucoes:
+          type: string
+          example: Regar diariamente e manter exposição solar moderada
+
+    LoteCultivoInput:
+      type: object
+      required: [planoCultivoId, dataInicio, estado]
+      properties:
+        planoCultivoId:
+          type: string
+          example: "665f1a7b2f4c9a0012345678"
+        dataInicio:
+          type: string
+          format: date
+          example: 2025-03-01
+        dataFimPrevista:
+          type: string
+          format: date
+          example: 2025-04-30
+        dataFimReal:
+          type: string
+          format: date
+          example: 2025-05-02
+        estado:
+          type: string
+          enum: [ativo, concluido, comprometido]
+          example: ativo
+        localizacao:
+          type: string
+          example: Estufa 1
+        permiteDivisaoParcial:
+          type: boolean
+          example: true
+        perdas:
+          type: number
+          example: 2.5
+        produtividade:
+          type: number
+          example: 12.5
+
+    TarefaInput:
+      type: object
+      required: [loteCultivoId, tipo, descricao, dataPrevista, estado]
+      properties:
+        loteCultivoId:
+          type: string
+          example: "665f1a7b2f4c9a0012345678"
+        tipo:
+          type: string
+          enum: [rega, fertilizacao, colheita, monitorizacao]
+          example: rega
+        descricao:
+          type: string
+          example: Regar o lote
+        dataPrevista:
+          type: string
+          format: date
+          example: 2025-03-05
+        dataExecucao:
+          type: string
+          format: date
+          example: 2025-03-05
+        estado:
+          type: string
+          enum: [pendente, executada]
+          example: pendente
+
+    MedicaoAmbientalInput:
+      type: object
+      required: [loteCultivoId, temperatura, humidade, luminosidade, dataHora]
+      properties:
+        loteCultivoId:
+          type: string
+          example: "665f1a7b2f4c9a0012345678"
+        temperatura:
+          type: number
+          format: float
+          example: 22.5
+        humidade:
+          type: number
+          format: float
+          example: 65.0
+        luminosidade:
+          type: number
+          format: float
+          example: 800
+        dadosValidos:
+          type: boolean
+          example: true
+        observacao:
+          type: string
+          example: Medição registada automaticamente pelo sensor
+        dataHora:
+          type: string
+          format: date-time
+          example: 2025-03-05T10:30:00Z
+
+    AlertaInput:
+      type: object
+      required: [loteCultivoId, mensagem, nivel, estado]
+      properties:
+        loteCultivoId:
+          type: string
+          example: "665f1a7b2f4c9a0012345678"
+        medicaoAmbientalId:
+          type: string
+          example: "665f1a7b2f4c9a0012345678"
+        mensagem:
+          type: string
+          example: Humidade abaixo do valor recomendado
+        nivel:
+          type: string
+          enum: [informativo, aviso, critico]
+          example: aviso
+        estado:
+          type: string
+          enum: [ativo, resolvido, ignorado]
+          example: ativo
+        justificacao:
+          type: string
+          example: Alerta ignorado após verificação manual
+        dataHora:
+          type: string
+          format: date-time
+          example: 2025-03-05T10:30:00Z
+
+    LogAuditoria:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "665f1a7b2f4c9a0012345678"
+        utilizadorId:
+          type: string
+          example: "665f1a7b2f4c9a0012345678"
+        acao:
+          type: string
+          example: Criação de lote de cultivo
+        entidade:
+          type: string
+          example: LoteCultivo
+        dataHora:
+          type: string
+          format: date-time
+          example: 2025-03-05T10:30:00Z
