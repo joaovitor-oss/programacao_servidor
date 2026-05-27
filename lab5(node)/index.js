@@ -1,6 +1,9 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+
 
 // Importar o Router (Fase 2)
 const notasRouter = require('./Routes/notas.js');
@@ -8,7 +11,8 @@ const notasRouter = require('./Routes/notas.js');
 app.use(express.json());
 
 // Configurar a ligação à BD (Fase 3.3)
-const mongoURI = // " Nome da sua ligação ao MongoDB Atlas aqui ";
+const mongoURI = process.env.MONGO_URI;
+
 mongoose.connect(mongoURI)
   .then(() => console.log('✅ Ligado ao MongoDB Atlas com sucesso!'))
   .catch((err) => console.error('❌ Erro ao ligar ao MongoDB:', err));
