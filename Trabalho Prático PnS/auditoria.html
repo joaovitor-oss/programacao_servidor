@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Estufa - Auditoria do Sistema</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="min-height: 100vh; overflow-y: auto; background-color: #f4f6f9; margin: 0; padding: 0;">
+
+    <nav class="navbar">
+        <div class="nav-brand">🕵️‍♂️ Smart Estufa - Log de Auditoria</div>
+        <div class="nav-user">
+            <button id="btn-abrir-modal" class="btn-nav" style="background: #37474f; border: none; margin-right: 15px; cursor: pointer; font-weight: bold;">➕ Criar Registo Manual</button>
+            <a href="dashboard.html" class="btn-nav" style="background: #2e7d32;">📊 Dashboard</a>
+            <a href="gestao.html" class="btn-nav" style="background: #0288d1;">🌱 Gerir Lotes</a>
+            <a href="planos.html" class="btn-nav" style="background: #8e24aa;">📋 Planos</a>
+            <a href="tarefas.html" class="btn-nav" style="background: #e65100;">🛠️ Tarefas</a>
+            <a href="alertas.html" class="btn-nav" style="background: #d32f2f;">⚠️ Alertas</a>
+        </div>
+    </nav>
+
+    <div id="modal-log" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
+        <div style="background: white; padding: 30px; border-radius: 8px; width: 100%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+            <h3 id="titulo-modal" style="color: #37474f; margin-top: 0; margin-bottom: 20px;">➕ Adicionar Registo de Auditoria</h3>
+            
+            <form id="form-log">
+                <input type="hidden" id="log-id">
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Utilizador Responsável:</label>
+                    <select id="log-utilizador" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="">A carregar utilizadores...</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Ação Realizada:</label>
+                    <input type="text" id="log-acao" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: Criou novo lote, Eliminou medição">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Entidade Afetada:</label>
+                    <input type="text" id="log-entidade" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: LoteCultivo, MedicaoAmbiental, Tarefa">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Data e Hora do Evento:</label>
+                    <input type="datetime-local" id="log-datahora" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                    <small style="color: #777;">Deixa em branco para assumir o momento exato do clique.</small>
+                </div>
+
+                <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 25px;">
+                    <button type="button" id="btn-fechar-modal" style="background: #777; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Cancelar</button>
+                    <button type="submit" style="background: #37474f; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Gravar Registo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container" style="max-width: 1100px; margin: 40px auto; padding: 0 20px; margin-top: 160px;">
+        <div class="table-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h2 style="color: #333; margin-top: 0; margin-bottom: 5px;">🕵️‍♂️ Histórico de Atividades do Sistema</h2>
+            <p style="color: #666; margin-bottom: 25px;">Registo detalhado de todas as operações efetuadas pelos utilizadores na plataforma.</p>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background: #f5f5f5; border-bottom: 2px solid #eee;">
+                        <th style="padding: 12px; width: 25%;">Utilizador</th>
+                        <th style="padding: 12px; width: 25%;">Ação Operada</th>
+                        <th style="padding: 12px; width: 20%;">Entidade Alvo</th>
+                        <th style="padding: 12px; width: 18%;">Data / Hora</th>
+                        <th style="padding: 12px; width: 12%; text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-logs-corpo">
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 20px; color: #777;">A ler base de dados de auditoria...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/auditoria.js"></script>
+</body>
+</html>

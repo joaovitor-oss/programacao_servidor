@@ -1,0 +1,428 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    /* ❌ Se tiver "height: 100vh;" ou "overflow: hidden;", APAGA ou Altera para isto: */
+    min-height: 100vh;   /* Garante que tem pelo menos o tamanho do ecrã, mas pode crescer */
+    overflow-y: auto;    /* Ativa a barra de scroll vertical sempre que o conteúdo estoirar o limite */
+    background-color: #f4f6f9;
+    margin: 0;
+    background: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+
+    
+}
+
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-box {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid #2e7d32; /* Verde Estufa */
+}
+
+.login-box h2 {
+    color: #2e7d32;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.login-box p {
+    color: #757575;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #424242;
+    margin-bottom: 6px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #1b5e20;
+}
+
+/* Estilo do Alerta de Erro */
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.alert.error {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+/* --- ESTILOS DO DASHBOARD --- */
+.navbar {
+    background: #1b5e20;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-brand {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid white;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.dashboard-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 100px auto 40px auto;
+    padding: 0 20px;
+}
+
+.section-header {
+    margin-bottom: 20px;
+}
+.section-header h2 {
+    color: #333;
+}
+.section-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Grelha dos Cartões */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    border-left: 6px solid #ccc;
+}
+.card h3 {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+.card .metric-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 5px;
+}
+.card-status {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Cores dinâmicas para os sensores */
+.card-temp { border-left-color: #ff7043; } /* Laranja */
+.card-hum { border-left-color: #29b6f6; }  /* Azul */
+.card-lux { border-left-color: #ffca28; }  /* Amarelo */
+
+/* Secção de Alertas */
+.alerts-list {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.no-alerts {
+    color: #2e7d32;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.alert-item {
+    background: #fff5f5;
+    border: 1px solid #ffe3e3;
+    border-left: 5px solid #e53935;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.alert-item:last-child { margin-bottom: 0; }
+
+.alert-info h4 {
+    color: #c62828;
+    margin-bottom: 4px;
+}
+.alert-info p {
+    font-size: 14px;
+    color: #555;
+}
+.alert-badge {
+    background: #e53935;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* --- BOTÕES DE NAVEGAÇÃO (NAVBAR) --- */
+.btn-nav {
+    display: inline-block;
+    background: #0288d1; /* Azul chamativo para a gestão */
+    color: white !important;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.1s;
+}
+
+.btn-nav:hover {
+    background: #01579b;
+    transform: translateY(-1px);
+}
+
+/* Cor específica se quiseres diferenciar o botão que volta ao Dashboard */
+.btn-dashboard {
+    background: #2e7d32; /* Verde Estufa */
+}
+
+.btn-dashboard:hover {
+    background: #1b5e20;
+}
+
+/* --- ESTILOS EXCLUSIVOS DA PÁGINA DE PLANOS --- */
+
+/* Botão específico para Criar Planos (Roxo) */
+.btn-planos-submit {
+    background: #8e24aa !important;
+    color: white;
+    font-weight: 600;
+}
+
+.btn-planos-submit:hover {
+    background: #6a1b9a !important;
+}
+
+/* Ajuste rápido para os campos em grelha (lado a lado) no mobile */
+@media (max-width: 600px) {
+    #plano-form div {
+        grid-template-columns: 1fr !important; /* No telemóvel os campos ficam uns por baixo dos outros */
+        gap: 10px !important;
+    }
+}
+
+/* Badges de Tipo no Histórico de Planos */
+.badge-tipo {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.type-regular {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+.type-emergencia {
+    background: #ffebee;
+    color: #c62828;
+}
+.type-pontual {
+    background: #e3f2fd;
+    color: #0d47a1;
+}
+
+/* --- ESTILOS EXCLUSIVOS DA GESTÃO DE PERFIL --- */
+
+/* Botão de Atualizar Perfil (Azul Padrão) */
+.btn-perfil-submit {
+    background: #0288d1 !important;
+    color: white;
+    font-weight: 600;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Botão do Painel de Admin (Laranja de Alerta/Moderação) */
+.btn-admin-submit {
+    background: #e65100 !important;
+    color: white;
+    font-weight: 600;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-admin-submit:hover {
+    background: #bf360c !important;
+}
+
+/* --- ESTILOS EXCLUSIVOS DO CENTRO DE ALERTAS --- */
+
+/* Emblemas (Badges) de Categoria do Alerta */
+.badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.badge-critico {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+.badge-aviso {
+    background: #fff3e0;
+    color: #ef6c00;
+    border: 1px solid #ffcc80;
+}
+.badge-resolvido {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+/* Botão de Resolução */
+.btn-resolver {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.btn-resolver:hover {
+    background: #1b5e20;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #1b5e20; /* O mesmo verde escuro */
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+}
+
+.sidebar-brand {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #e8f5e9;
+    padding: 15px 20px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.nav-links li a:hover, .nav-links li a.active {
+    background-color: #2e7d32;
+    color: white;
+    border-left: 4px solid #81c784;
+}

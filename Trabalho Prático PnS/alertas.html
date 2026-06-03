@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Estufa - Centro de Alertas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">⚠️ Smart Estufa - Alertas</div>
+        <div class="nav-user">
+            <a href="dashboard.html" class="btn-nav btn-dashboard">📋 Ver Dashboard</a>
+            <a href="gestao.html" class="btn-nav" style="background: #0288d1;">⚙️ Gerir Lotes</a>
+            <a href="planos.html" class="btn-nav" style="background: #8e24aa;">📋 Criar Planos</a>
+            <a href="ervas.html" class="btn-nav" style="background: #2e7d32;">🌿 Catálogo Ervas</a>
+            <a href="perfil.html" class="btn-nav" style="background: #555;">👤 O Meu Perfil</a>
+            <a href="auditoria.html" class="btn-nav" style="background: #37474f;">🕵️‍♂️ Auditoria</a>
+            <a href="tarefas.html" class="btn-nav" style="background: #e65100;">🛠️ Tarefas</a>
+            <button id="btn-logout" class="btn-secondary" style="margin-left: 10px;">Sair</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container" style="max-width: 1000px; margin: 100px auto 30px auto; padding: 20px;">
+        
+        <header class="section-header">
+            <h2>⚠️ Gestão de Alertas e Ocorrências</h2>
+            <p>Monitorize anomalias detetadas pelos sensores, crie novos avisos ou faça a gestão de ocorrências da estufa.</p>
+        </header>
+
+        <div id="msg-alerta-sucesso" class="alert success" style="display: none; background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center;"></div>
+        <div id="msg-alerta-erro" class="alert error" style="display: none; background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center;"></div>
+
+        <div class="data-table-container" style="background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 20px; border-top: 5px solid #0288d1; margin-bottom: 30px;">
+            <h3 id="form-titulo" style="color: #0288d1; margin-top: 0; margin-bottom: 15px;">➕ Registar Novo Alerta Manual</h3>
+            <form id="form-alerta" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <input type="hidden" id="alerta-id"> <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Lote de Cultivo *</label>
+                    <select id="form-lote" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" required>
+                        <option value="">A carregar lotes...</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Nível de Gravidade *</label>
+                    <select id="form-nivel" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" required>
+                        <option value="informativo">Informativo</option>
+                        <option value="aviso" selected>Aviso</option>
+                        <option value="critico">Crítico</option>
+                    </select>
+                </div>
+
+                <div style="grid-column: span 2;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Mensagem do Problema / Anomalia *</label>
+                    <input type="text" id="form-mensagem" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" placeholder="Ex: Sensor de humidade detetou solo demasiado seco." required>
+                </div>
+
+                <div style="grid-column: span 2; display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" id="btn-cancelar-edicao" class="btn-secondary" style="display: none; background: #777; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Cancelar Edição</button>
+                    <button type="submit" id="btn-submeter" style="background: #0288d1; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Salvar Alerta</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="data-table-container" style="background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 20px; border-top: 5px solid #d32f2f;">
+            <h3 style="color: #d32f2f; margin-top: 0; margin-bottom: 15px;">🚨 Ocorrências Ativas (Requerem Atenção)</h3>
+            <table class="data-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background: #f5f5f5; border-bottom: 2px solid #eee;">
+                        <th style="padding: 12px;">Lote de Cultivo</th>
+                        <th style="padding: 12px;">Mensagem do Problema</th>
+                        <th style="padding: 12px;">Nível</th>
+                        <th style="padding: 12px;">Data / Hora</th>
+                        <th style="padding: 12px; text-align: center;">Ações de Gestão</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-alertas-ativos">
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 20px; color: #666;">A carregar alertas do sistema...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="data-table-container" style="background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 20px; border-top: 5px solid #2e7d32; margin-top: 40px;">
+            <h3 style="color: #2e7d32; margin-top: 0; margin-bottom: 15px;">🗄️ Histórico de Alertas Tratados</h3>
+            <table class="data-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background: #f5f5f5; border-bottom: 2px solid #eee;">
+                        <th style="padding: 12px;">Lote de Cultivo</th>
+                        <th style="padding: 12px;">Problema Original</th>
+                        <th style="padding: 12px;">Justificação do Operador</th>
+                        <th style="padding: 12px;">Data de Tratamento</th>
+                        <th style="padding: 12px;">Estado</th>
+                        <th style="padding: 12px; text-align: center;">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-alertas-resolvidos">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 20px; color: #666;">Nenhum registo no histórico.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="js/alertas.js"></script>
+</body>
+</html>

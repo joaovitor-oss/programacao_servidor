@@ -1,21 +1,52 @@
-const { Router } = require('express');
-const router = Router();
 const Utilizador = require('../models/utilizador');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const { registarAcao } = require('../utils/auditoria');
 
-// GET /utilizadores — Listar todos os utilizadores (esconde a password por segurança)
-router.get('/', async (req, res) => {
+exports.login = async (req, res) => {
     try {
-        // O .select('-password') garante que a password não é enviada na resposta da API
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ erro: 'Introduza o email e a password.' });
+        }
+
+        const utilizador = await Utilizador.findOne({ email });
+        if (!utilizador) return res.status(401).json({ erro: 'Credenciais inválidas.' });
+
+        const passwordCorreta = await bcrypt.compare(password, utilizador.password);
+        if (!passwordCorreta) return res.status(401).json({ erro: 'Credenciais inválidas.' });
+
+        const token = jwt.sign(
+            { id: utilizador._id, tipo: utilizador.tipo },
+            process.env.JWT_SECRET || 'chave_secreta_padrao',
+            { expiresIn: '8h' }
+        );
+
+        await registarAcao(utilizador._id, 'login', 'Utilizador');
+
+        res.status(200).json({
+            token,
+            utilizador: { id: utilizador._id, nome: utilizador.nome, email: utilizador.email, tipo: utilizador.tipo }
+        });
+    } catch (err) {
+        res.status(500).json({ erro: 'Erro interno ao efetuar login.' });
+    }
+};
+
+exports.listarUtilizadores = async (req, res) => {
+    try {
         const utilizadores = await Utilizador.find().select('-password');
         res.status(200).json(utilizadores);
     } catch (err) {
         res.status(500).json({ erro: 'Erro interno do servidor' });
     }
-});
+};
 
-// GET /utilizadores/:id — Obter um utilizador específico
-router.get('/:id', async (req, res) => {
+exports.obterUtilizador = async (req, res) => {
     try {
+        if (req.utilizadorInfo.tipo !== 'administrador' && req.utilizadorInfo.tipo !== 'responsavel' && req.utilizadorInfo.id !== req.params.id) {
+            return res.status(403).json({ erro: 'Acesso Proibido. Só pode consultar o seu próprio perfil.' });
+        }
         const utilizador = await Utilizador.findById(req.params.id).select('-password');
         if (!utilizador) return res.status(404).json({ erro: 'Utilizador não encontrado' });
         res.status(200).json(utilizador);
@@ -23,67 +54,61 @@ router.get('/:id', async (req, res) => {
         if (err.name === 'CastError') return res.status(400).json({ erro: 'ID inválido' });
         res.status(500).json({ erro: 'Erro interno do servidor' });
     }
-});
+};
 
-// POST /utilizadores — Criar um utilizador (Regista com validação de email único)
-router.post('/', async (req, res) => {
+exports.criarUtilizador = async (req, res) => {
     try {
+        const salt = await bcrypt.genSalt(10);
+        req.body.password = await bcrypt.hash(req.body.password, salt);
+
         const novoUtilizador = await Utilizador.create(req.body);
-        
-        // Transforma em objeto JS para remover a password antes de enviar a resposta
+        await registarAcao(req.utilizadorInfo.id, 'criar', 'Utilizador');
+
         const resposta = novoUtilizador.toObject();
         delete resposta.password;
-        
         res.status(201).json(resposta);
     } catch (err) {
-        // Trata o erro se o email já existir na base de dados
-        if (err.code === 11000) {
-            return res.status(400).json({ erro: 'Este email já está a ser utilizado por outro utilizador.' });
-        }
+        if (err.code === 11000) return res.status(400).json({ erro: 'Este email já está registado.' });
         if (err.name === 'ValidationError') {
-            const mensagens = Object.values(err.errors).map(e => e.message);
-            return res.status(400).json({ erros: mensagens });
+            return res.status(400).json({ erros: Object.values(err.errors).map(e => e.message) });
         }
         res.status(500).json({ erro: 'Erro interno do servidor' });
     }
-});
+};
 
-// PUT /utilizadores/:id — Atualizar dados do utilizador
-router.put('/:id', async (req, res) => {
+exports.atualizarUtilizador = async (req, res) => {
     try {
-        // Se tentarem atualizar a password por aqui, idealmente deveríamos encriptar, 
-        // mas para já vamos focar na atualização dos dados básicos.
-        const utilizadorAtualizado = await Utilizador.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true, runValidators: true }
-        ).select('-password');
+        if (req.utilizadorInfo.tipo !== 'administrador' && req.utilizadorInfo.id !== req.params.id) {
+            return res.status(403).json({ erro: 'Não autorizado a alterar este utilizador.' });
+        }
 
-        if (!utilizadorAtualizado) return res.status(404).json({ erro: 'Utilizador não encontrado' });
-        res.status(200).json(utilizadorAtualizado);
+        if (req.body.password) {
+            const salt = await bcrypt.genSalt(10);
+            req.body.password = await bcrypt.hash(req.body.password, salt);
+        }
+
+        const atualizado = await Utilizador.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }).select('-password');
+        if (!atualizado) return res.status(404).json({ erro: 'Utilizador não encontrado' });
+
+        await registarAcao(req.utilizadorInfo.id, 'atualizar', 'Utilizador');
+        res.status(200).json(atualizado);
     } catch (err) {
-        if (err.name === 'CastError') return res.status(400).json({ erro: 'ID inválido' });
-        if (err.code === 11000) {
-            return res.status(400).json({ erro: 'Este email já está a ser utilizado.' });
-        }
-        if (err.name === 'ValidationError') {
-            const mensagens = Object.values(err.errors).map(e => e.message);
-            return res.status(400).json({ erros: mensagens });
-        }
+        if (err.code === 11000) return res.status(400).json({ erro: 'Este email já está em uso.' });
         res.status(500).json({ erro: 'Erro interno do servidor' });
     }
-});
+};
 
-// DELETE /utilizadores/:id — Eliminar utilizador
-router.delete('/:id', async (req, res) => {
+exports.eliminarUtilizador = async (req, res) => {
     try {
+        if (req.utilizadorInfo.id === req.params.id) {
+            return res.status(400).json({ erro: 'Não pode eliminar a sua própria conta ativa.' });
+        }
         const utilizador = await Utilizador.findByIdAndDelete(req.params.id);
         if (!utilizador) return res.status(404).json({ erro: 'Utilizador não encontrado' });
+
+        await registarAcao(req.utilizadorInfo.id, 'eliminar', 'Utilizador');
         res.status(204).send();
     } catch (err) {
-        if (err.name === 'CastError') return res.status(400).json({ erro: 'ID inválido' });
         res.status(500).json({ erro: 'Erro interno do servidor' });
     }
-});
-
-module.exports = router;
+};

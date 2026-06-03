@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Estufa - Planos de Cultivo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">📋 Smart Estufa - Planos</div>
+        <div class="nav-user">
+            <a href="dashboard.html" class="btn-nav btn-dashboard">📋 Ver Dashboard</a>
+            <a href="gestao.html" class="btn-nav" style="background: #0288d1;">⚙️ Gerir Lotes</a>
+            <a href="ervas.html" class="btn-nav" style="background: #2e7d32;">🌿 Catálogo Ervas</a>
+            <a href="alertas.html" class="btn-nav" style="background: #d32f2f;">⚠️ Alertas</a>
+            <a href="perfil.html" class="btn-nav" style="background: #555;">👤 O Meu Perfil</a>
+            <a href="auditoria.html" class="btn-nav" style="background: #37474f;">🕵️‍♂️ Auditoria</a>
+            <a href="tarefas.html" class="btn-nav" style="background: #e65100;">🛠️ Tarefas</a>
+            <button id="btn-logout" class="btn-secondary" style="margin-left: 10px;">Sair</button>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 950px; margin: 30px auto; padding: 0 20px; margin-top: 160px;">
+        
+        <div class="form-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px;">
+            <h3 id="titulo-formulario" style="color: #8e24aa; margin-top: 0;">📋 Criar Novo Plano de Cultivo</h3>
+            
+            <form id="form-plano">
+                <input type="hidden" id="plano-id">
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nome do Plano:</label>
+                    <input type="text" id="plano-nome" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: Plano de Germinação - Manjericão">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Planta Associada (Catálogo):</label>
+                    <select id="plano-erva" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="">A carregar plantas do catálogo...</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Tipo de Plano:</label>
+                        <select id="plano-tipo" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="regular">Regular</option>
+                            <option value="emergencia">Emergência</option>
+                            <option value="pontual">Pontual</option>
+                        </select>
+                    </div>
+                    
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Duração do Plano (Dias):</label>
+                        <input type="number" id="plano-duracao" required min="1" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: 30">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Temperatura Mínima (°C):</label>
+                        <input type="number" id="plano-temp-min" step="0.1" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: 15.5">
+                    </div>
+                    
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Temperatura Máxima (°C):</label>
+                        <input type="number" id="plano-temp-max" step="0.1" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: 32.0">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">💊 Dosagem (Emergência):</label>
+                        <input type="text" id="plano-dosagem" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: 20ml/L ou 5g/vaso">
+                    </div>
+                    
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">🚨 Tipo de Intervenção:</label>
+                        <input type="text" id="plano-intervencao" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: Tratamento contra Pragas">
+                    </div>
+                </div>
+
+                <div id="container-autorizacao" style="margin-bottom: 20px; padding: 12px; background: #fff3e0; border: 1px solid #ffe0b2; border-radius: 4px;">
+                    <label style="display: flex; align-items: center; gap: 8px; font-weight: bold; color: #e65100; cursor: pointer;">
+                        <input type="checkbox" id="plano-autorizacao" value="true">
+                        ⚠️ Confirmo o consentimento explícito do responsável técnico para este plano pontual.
+                    </label>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" id="btn-submeter" class="btn-primary" style="background: #8e24aa; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Criar Plano</button>
+                    <button type="button" id="btn-cancelar" style="display: none; background: #777; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;" onclick="cancelarEdicao()">Cancelar Alteração</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="msg-plano-sucesso" style="display: none; background: #e8f5e9; color: #2e7d32; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-weight: bold; border: 1px solid #c8e6c9;"></div>
+        <div id="msg-plano-erro" style="display: none; background: #ffebee; color: #c62828; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-weight: bold; border: 1px solid #ffcdd2;"></div>
+
+        <div class="table-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h3 style="color: #333; margin-top: 0; margin-bottom: 20px;">📋 Planos de Cultivo Configurados</h3>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background: #f5f5f5; border-bottom: 2px solid #eee;">
+                        <th style="padding: 12px; width: 25%;">Nome do Plano</th>
+                        <th style="padding: 12px; width: 22%;">Planta Associada</th>
+                        <th style="padding: 12px; width: 13%;">Tipo</th>
+                        <th style="padding: 12px; width: 12%;">Duração</th>
+                        <th style="padding: 12px; width: 13%;">Margens</th>
+                        <th style="padding: 12px; width: 15%; text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-planos-corpo">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 20px; color: #777;">A carregar...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/planos.js"></script>
+</body>
+</html>

@@ -1,64 +1,65 @@
-// Forçar o uso de DNS público para evitar o erro ECONNREFUSED do MongoDB Atlas
-const dns = require('dns');
-dns.setServers(['8.8.8.8', '1.1.1.1']);
-
-// Carrega as variáveis de ambiente do arquivo .env (Instale com: npm i dotenv)
-require('dotenv').config();
-
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
-// Usa a porta do ambiente (ex: Heroku/Render) ou a 3000 localmente
-const port = process.env.PORT || 3000; 
 
-const planoCultivoRouter = require('./controllers/planoCultivoController');
-const ervaAromaticaRouter = require('./controllers/ervaAromaticaController');
-const utilizadorRouter = require('./controllers/utilizadorController');
-const tarefaRouter = require('./controllers/tarefaController');
-const loteCultivoRouter = require('./controllers/loteCultivoController');
-const medicaoAmbientalRouter = require('./controllers/medicaoAmbientalController');
-const logAuditoriaRouter = require('./controllers/logAuditoriaController');
-const alertaRouter = require('./controllers/alertaController');
+// ==========================================
+// 🛠️ MIDDLEWARES GLOBAIS
+// ==========================================
+app.use(cors());
+app.use(express.json()); // Permite ler o corpo das requisições em JSON
 
-// Puxa a string de conexão de forma segura
-const MONGO_URI = process.env.MONGO_URI;
+// ==========================================
+// 🧭 IMPORTAÇÃO DAS ROTAS (Clean Architecture)
+// ==========================================
+const rotasUtilizadores = require('./routes/utilizador');
+const rotasErvas = require('./routes/ervaAromatica');
+const rotasPlanos = require('./routes/planoCultivo');
+const rotasLotes = require('./routes/loteCultivo');
+const rotasMedicoes = require('./routes/medicaoAmbiental');
+const rotasTarefas = require('./routes/tarefa');
+const rotasAlertas = require('./routes/alerta');
+const rotasLogs = require('./routes/logAuditoria');
 
-// Middleware para ler JSON
-app.use(express.json());
+// ==========================================
+// 🚀 ANCORAGEM DOS ENDPOINTS
+// ==========================================
+app.use('/utilizadores', rotasUtilizadores);
+app.use('/ervas', rotasErvas);
+app.use('/planos', rotasPlanos);
+app.use('/lotes', rotasLotes);
+app.use('/medicoes-ambientais', rotasMedicoes);
+app.use('/tarefas', rotasTarefas);
+app.use('/alertas', rotasAlertas);
+app.use('/logs-auditoria', rotasLogs);
 
-// Middleware de logging
-app.use((req, res, next) => {
-    const dataHora = new Date().toLocaleString();
-    console.log(`[${dataHora}] ${req.method} ${req.url}`);
-    next();
+// Rota base de teste para garantir que o servidor está online
+app.get('/', (req, res) => {
+    res.status(200).json({ 
+        status: "Online", 
+        mensagem: "API do Sistema Smart Greenhouse a funcionar corretamente." 
+    });
 });
 
-// Rotas
-app.use('/planos-cultivo', planoCultivoRouter);
-app.use('/ervas-aromaticas', ervaAromaticaRouter);
-app.use('/utilizadores', utilizadorRouter);
-app.use('/tarefas', tarefaRouter);
-app.use('/lotes-cultivo', loteCultivoRouter);
-app.use('/medicoes-ambientais', medicaoAmbientalRouter);
-app.use('/logs-auditoria', logAuditoriaRouter);
-app.use('/alertas', alertaRouter);
+// ==========================================
+// 💾 CONEXÃO À BASE DE DADOS (MongoDB)
+// ==========================================
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/smart_greenhouse';
+const PORT = process.env.PORT || 3000;
 
-// Middleware Global de Tratamento de Erros (Adicionado)
-app.use((err, req, res, next) => {
-    console.error('❌ Erro interno do servidor:', err.stack);
-    res.status(500).json({ erro: 'Algo correu mal no servidor!' });
-});
-
-// Conexão ao Banco e Inicialização do Servidor (Apenas um app.listen aqui!)
 mongoose.connect(MONGO_URI)
     .then(() => {
-        console.log('Ligado ao MongoDB! 🎉');
-        app.listen(port, () => {
-            console.log(`🚀 Servidor a correr em http://localhost:${port}`);
+        console.log('🔌 [Database] Conexão ao MongoDB estabelecida com sucesso!');
+        
+        // O servidor só começa a ouvir pedidos depois da BD estar ligada
+        app.listen(PORT, () => {
+            console.log(`🚀 [Server] Servidor a correr no porto ${PORT}`);
+            console.log(`📂 Endpoints disponíveis em http://localhost:${PORT}`);
         });
     })
     .catch(err => {
-        console.error('❌ Erro ao ligar ao MongoDB:', err);
-        process.exit(1); // Fecha a aplicação se não conseguir conectar ao banco
+        console.error('❌ [Database] Erro crítico ao ligar ao MongoDB:', err.message);
+        process.exit(1); // Encerra a aplicação caso a BD falhe
     });

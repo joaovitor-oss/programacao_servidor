@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Estufa - Catálogo de Ervas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">🌿 Smart Estufa - Catálogo</div>
+        <div class="nav-user">
+            <a href="dashboard.html" class="btn-nav btn-dashboard">📋 Ver Dashboard</a>
+            <a href="gestao.html" class="btn-nav" style="background: #0288d1;">⚙️ Gerir Lotes</a>
+            <a href="planos.html" class="btn-nav" style="background: #8e24aa;">📋 Criar Planos</a>
+            <a href="alertas.html" class="btn-nav" style="background: #d32f2f;">⚠️ Alertas</a>
+            <a href="perfil.html" class="btn-nav" style="background: #555;">👤 O Meu Perfil</a>
+            <a href="tarefas.html" class="btn-nav" style="background: #e65100;">🛠️ Tarefas</a>
+            <a href="auditoria.html" class="btn-nav" style="background: #37474f;">🕵️‍♂️ Auditoria</a>
+            <button id="btn-logout" class="btn-secondary" style="margin-left: 10px;">Sair</button>
+        </div>
+    </nav>
+    
+    </div>
+
+    <div class="container" style="max-width: 900px; margin: 30px auto; padding: 0 20px; margin-top: 160px;">
+        
+        <div class="form-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px;">
+            <h3 id="titulo-formulario" style="color: #2e7d32; margin-top: 0;">🌿 Adicionar Nova Erva ao Catálogo</h3>
+            
+            <form id="form-erva">
+                <input type="hidden" id="erva-id">
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nome da Planta:</label>
+                    <input type="text" id="erva-nome" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: Hortelã-Pimenta">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Espécie:</label>
+                    <input type="text" id="erva-especie" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: Mentha piperita">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Descrição / Notas de Cultivo:</label>
+                    <textarea id="erva-descricao" rows="3" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: Necessita de rega frequente e boa exposição solar..."></textarea>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" id="btn-submeter" class="btn-primary" style="background: #2e7d32; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Adicionar ao Catálogo</button>
+                    <button type="button" id="btn-cancelar" style="display: none; background: #777; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;" onclick="cancelarEdicao()">Cancelar Alteração</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="msg-erva-sucesso" style="display: none; background: #e8f5e9; color: #2e7d32; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-weight: bold; border: 1px solid #c8e6c9;"></div>
+        <div id="msg-erva-erro" style="display: none; background: #ffebee; color: #c62828; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-weight: bold; border: 1px solid #ffcdd2;"></div>
+
+        <div class="table-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h3 style="color: #333; margin-top: 0; margin-bottom: 20px;">📋 Plantas Registadas no Sistema</h3>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background: #f5f5f5; border-bottom: 2px solid #eee;">
+                        <th style="padding: 12px; width: 25%;">Nome</th>
+                        <th style="padding: 12px; width: 25%;">Espécie</th>
+                        <th style="padding: 12px; width: 35%;">Descrição</th>
+                        <th style="padding: 12px; width: 15%; text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-ervas-corpo">
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 20px; color: #777;">A carregar o catálogo de ervas...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/ervas.js"></script>
+</body>
+</html>

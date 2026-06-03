@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Estufa - O Meu Perfil</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+    <nav class="navbar">
+        <div class="nav-brand">📋 Smart Estufa - Perfil e Utilizadores</div>
+        <div class="nav-user">
+            <a href="dashboard.html" class="btn-nav btn-dashboard">📋 Ver Dashboard</a>
+            <a href="gestao.html" class="btn-nav" style="background: #0288d1;">🌱 Gerir Lotes</a>
+            <a href="planos.html" class="btn-nav" style="background: #8e24aa;">📋 Criar Planos</a>
+            <a href="alertas.html" class="btn-nav" style="background: #d32f2f;">⚠️ Alertas</a>
+            <a href="auditoria.html" class="btn-nav" style="background: #37474f;">🕵️‍♂️ Auditoria</a>
+            <a href="tarefas.html" class="btn-nav" style="background: #e65100;">🛠️ Tarefas</a>
+            <button id="btn-logout" class="btn-secondary" style="margin-left: 10px;">Sair</button>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 1000px; margin: 100px auto 30px auto; padding: 0 20px; margin-top: 160px;">
+        
+        <div class="form-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 35px;">
+            <h3 style="color: #2e7d32; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">👤 Os Meus Dados Pessoais</h3>
+            
+            <form id="form-meu-perfil">
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nome:</label>
+                        <input type="text" id="meu-nome" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Email:</label>
+                        <input type="email" id="meu-email" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    </div>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Cargo Atual: <span id="minha-etiqueta-cargo" style="color: #2e7d32; font-weight: bold; text-transform: uppercase;">---</span></label>
+                </div>
+                <button type="submit" class="btn-primary" style="background: #2e7d32; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Atualizar o Meu Perfil</button>
+            </form>
+        </div>
+
+        <div id="msg-perfil-sucesso" style="display: none; background: #e8f5e9; color: #2e7d32; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-weight: bold; border: 1px solid #c8e6c9;"></div>
+        <div id="msg-perfil-erro" style="display: none; background: #ffebee; color: #c62828; padding: 12px; border-radius: 6px; margin-bottom: 20px; text-align: center; font-weight: bold; border: 1px solid #ffcdd2;"></div>
+
+        <div id="area-admin-utilizadores" style="display: none;">
+            
+            <div id="card-criar-utilizador" class="form-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px; border-top: 4px solid #d32f2f;">
+                <h3 style="color: #d32f2f; margin-top: 0; margin-bottom: 15px;">➕ Registar Novo Utilizador no Sistema</h3>
+                
+                <form id="form-criar-utilizador">
+                    <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nome Completo:</label>
+                            <input type="text" id="novo-nome" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: Ana Rodrigues">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Email de Acesso:</label>
+                            <input type="email" id="novo-email" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Ex: ana.tecnica@estufa.com">
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Palavra-passe Provisória:</label>
+                            <input type="password" id="novo-password" required minlength="6" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Mínimo 6 caracteres">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nível de Acesso / Cargo:</label>
+                            <select id="novo-tipo" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                <option value="tecnico">Técnico (Apenas Visualiza)</option>
+                                <option value="responsavel">Responsável (Gere Lotes e Planos)</option>
+                                <option value="administrador">Administrador (Controlo Total)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" style="background: #d32f2f; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Criar Conta de Utilizador</button>
+                </form>
+            </div>
+            
+            <div id="card-editar-membro" class="form-card" style="display: none; background: #fffde7; padding: 25px; border-radius: 8px; border: 1px solid #f9a825; margin-bottom: 30px;">
+                <h3 id="titulo-form-membro" style="color: #f9a825; margin-top: 0;">✏️ Alterar Permissões de Membro</h3>
+                
+                <form id="form-editar-membro">
+                    <input type="hidden" id="membro-id">
+                    <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nome Completo:</label>
+                            <input type="text" id="membro-nome" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Email:</label>
+                            <input type="email" id="membro-email" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 20px; max-width: 50%;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nível de Acesso / Cargo:</label>
+                        <select id="membro-tipo" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="tecnico">Técnico (Apenas Visualiza)</option>
+                            <option value="responsavel">Responsável (Gere Lotes e Planos)</option>
+                            <option value="administrador">Administrador (Controlo Total)</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn-primary" style="background: #f9a825; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Guardar Alterações do Utilizador</button>
+                        <button type="button" style="background: #777; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;" onclick="cancelarEdicaoMembro()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <h3 style="color: #333; margin-top: 0; margin-bottom: 20px;">👥 Gestão de Utilizadores Registados (Modo Admin)</h3>
+                
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #eee;">
+                            <th style="padding: 12px; width: 35%;">Nome</th>
+                            <th style="padding: 12px; width: 35%;">Email</th>
+                            <th style="padding: 12px; width: 15%;">Nível de Acesso</th>
+                            <th style="padding: 12px; width: 15%; text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-utilizadores-corpo"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/perfil.js"></script>
+</body>
+</html>
